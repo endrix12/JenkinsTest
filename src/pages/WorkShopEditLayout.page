@@ -1,0 +1,28 @@
+<apex:page standardController="Workshop__c" tabStyle="Workshop__c">
+    <apex:sectionHeader title="{!$Label.WorkshopViewHeader}" subtitle="{!Workshop__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.WorkshopViewPageHeader}" mode="edit">
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:pageBlockSection title="{!$Label.WorkshopViewPageSectionInformation}" columns="2">
+                <apex:inputField required="true" id="WorkshopName" value="{!Workshop__c.Name}"/>
+                <apex:inputField id="Website" value="{!Workshop__c.Website__c}"/>
+                <apex:inputField id="Specialization" value="{!Workshop__c.Specialization__c}"/>
+                <apex:inputField id="Openhour" value="{!Workshop__c.OpenHour__c}"/>
+                <apex:inputField id="Phone" value="{!Workshop__c.Phone__c}"/>
+                <apex:inputField id="Closedhour" value="{!Workshop__c.ClosedHour__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.WorkshopViewPageSectionAdressInformation}">
+                <apex:inputField id="City" value="{!Workshop__c.City__c}"/>
+                <apex:inputField id="Province" value="{!Workshop__c.Province__c}"/>
+                <apex:inputField id="ZipPostalCode" value="{!Workshop__c.Zip_Postal_Code__c}"/>
+                <apex:inputField id="Street" value="{!Workshop__c.Street__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="{!$Label.Save}" action="{!Save}"/>
+                <apex:commandButton value="{!$Label.SaveAndNew}"/>
+                <apex:commandButton value="{!$Label.Cancel}" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="Contracts_workshop__r"/>
+</apex:page>

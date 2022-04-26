@@ -1,0 +1,103 @@
+<apex:page id="Search" controller="SearchController" tabStyle="Search__tab">
+
+    <style type="text/css">
+        #searchSectionButtons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #foundMechanicsTable {
+             margin-left: 250px;
+        }
+
+        #infoNoResult{
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #navigationSectionButtons{
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            position: absolute;
+            margin-bottom: 10px;
+            margin-top: 5px;
+            align-items: center;
+        }
+
+        .inputFieldClass{
+            width: 200px;
+         }
+    </style>
+
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.2; z-index: 1000; background-color: black;">
+                &nbsp;
+            </div>
+            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; display: flex; justify-content: center; align-items: center">
+                <img style="width: 80px; height: 80px;" src="{!URLFOR($Resource.LoaderIcon)}"/>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:sectionHeader title="{!$Label.SearchPage}" subtitle="{!$Label.SearchMechanic}"/>
+    <apex:form >
+        <apex:pageBlock id="searchBlock">
+            <apex:pageBlockSection columns="8">
+                <table id="foundMechanicsTable">
+                    <tr>
+                        <td>
+                            <apex:inputField id="FirstName" value="{!searchMechanic.First_name__c}"
+                                             styleClass="inputFieldClass"/>
+                        </td>
+                        <td>
+                            <apex:inputField id="LastName" value="{!searchMechanic.Name}" styleClass="inputFieldClass"/>
+                        </td>
+                        <td>
+                            <apex:inputText id="Email" value="{!searchMechanic.Email__c}" styleClass="inputFieldClass"/>
+                        </td>
+                        <td>
+                            <apex:inputField id="Country" value="{!searchMechanic.Country__c}"
+                                             styleClass="inputFieldClass"/>
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlockSection>
+            <div id="searchSectionButtons">
+                <apex:commandButton value="{!$Label.Search}" action="{!searchMechanicsAction}"
+                                    rerender="result,searchBlock"
+                                    status="status"/>
+                <apex:commandButton value="{!$Label.Clear}" action="{!clearSearchField}" rerender="result,searchBlock"
+                                    status="status"/>
+                <apex:commandButton value="{!$Label.Exportcsv}" action="{!exportToCSV}" disabled="{!isResult}"/>
+                <apex:commandButton value="{!$Label.Exportxls}" action="{!exportToXLS}" disabled="{!isResult}"/>
+            </div>
+        </apex:pageBlock>
+        <apex:pageBlock id="result" title="{!$Label.Found} {!totalRecords}" mode="maindetail">
+            <apex:pageBlockTable id="tableResult" value="{!mechanicsList}" var="Mechanic">
+                <apex:column value="{!Mechanic.First_name__c}" headerValue="{!$Label.FirstName}"/>
+                <apex:column value="{!Mechanic.Name}" headerValue="{!$Label.LastName}"/>
+                <apex:column value="{!Mechanic.Email__c}" headerValue="{!$Label.Email}"/>
+                <apex:column value="{!Mechanic.City__c}" headerValue="{!$Label.City}"/>
+                <apex:column value="{!Mechanic.Country__c}" headerValue="{!$Label.countryLabel}"/>
+            </apex:pageBlockTable>
+            <div id="infoNoResult">
+                <apex:outputText rendered="{!(mechanicsList.size == 0)}" value="{!$Label.noRecord}"/>
+            </div>
+            <div id="navigationSectionButtons">
+                <apex:selectList value="{!pageSize}" size="1" multiSelect="false">
+                    <apex:selectOptions value="{!pageSizeItems}"/>
+                    <apex:actionSupport event="onchange" action="{!reloadPageSize}"
+                                        rerender="result"/>
+                </apex:selectList>
+                <apex:commandButton value="{!$Label.First}" action="{!firstPage}" disabled="{!prev}" rerender="result"/>
+                <apex:commandButton value="{!$Label.Prev}" action="{!previous}" disabled="{!prev}" rerender="result"/>
+                <apex:commandButton value="{!$Label.Next}" action="{!next}" disabled="{!nxt}" rerender="result"/>
+                <apex:commandButton value="{!$Label.Last}" action="{!lastPage}" disabled="{!nxt}" rerender="result"/>
+                <apex:outputText value="{!$Label.pageNumber}{!OffsetSize}/{!PageNumber}"/>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

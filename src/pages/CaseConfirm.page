@@ -1,0 +1,99 @@
+<!--
+ - Created by Andrzej Buśko on 06.03.2022.
+ -->
+
+<apex:page id="CaseConfirm" lightningStylesheets="true" showHeader="false">
+    <style>
+/* Style inputs with type="text", select elements and textareas */
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+   background-image: url("{!$Resource.CaseBg}");
+   background-size: 100%;
+
+}
+h1 {
+    font-size: 22px;
+
+}
+
+input[type=text], select, textarea, input[type=email] {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+
+
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #2596be;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #116ba0;
+}
+
+/* Add a background color and some padding around the form */
+.form {
+    padding:10px;
+
+}
+
+.logo {
+
+}
+
+.container{
+       width:50%;
+  box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.3);
+margin-top: 100px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+
+}
+
+    </style>
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+    <!--  If necessary, please modify the charset parameter to specify the        -->
+    <!--  character set of your HTML page.                                        -->
+    <!--  ----------------------------------------------------------------------  -->
+
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>
+
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <FORM> element to your page.             -->
+    <!--  ----------------------------------------------------------------------  -->
+    <div class="container">
+        <div class="logo">
+            <img src="{!$Resource.worker1}" style="width: 300px; border-radius: 30px" />
+        </div>
+        <div class="form">
+            <div style="margin-bottom:10px">
+                <h1>The notification has been accepted.</h1>
+            </div>
+
+
+
+        </div>
+    </div>
+</apex:page>

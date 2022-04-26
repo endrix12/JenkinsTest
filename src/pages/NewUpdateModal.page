@@ -1,0 +1,135 @@
+<apex:page id="NewUpdateModal" controller="SearchDoctorsController" >
+<apex:form >
+    <section id="modal" role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header">
+
+
+                <h2 id="modalHeader"
+                    class="slds-modal__title slds-hyphenate"></h2>
+            </header>
+            <div  class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div id="mod" class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{! $Label.FirstName}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="firstName"  styleClass="slds-input"
+                                                value="{!doctorWrapper.firstName}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-6"></div>
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{! $Label.LastName}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="lastName" styleClass="slds-input"
+                                                value="{!doctorWrapper.lastName}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{! $Label.Email}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="email" styleClass="slds-input"
+                                                value="{!doctorWrapper.email}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-6"></div>
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{! $Label.Phone}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="phoneNumber" styleClass="slds-input"
+                                                value="{!doctorWrapper.phoneNumber}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{!$Label.City}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="city" styleClass="slds-input"
+                                                value="{!doctorWrapper.city}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-6"></div>
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{!$Label.Street}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="street" styleClass="slds-input"
+                                                value="{!doctorWrapper.street}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{!$Label.Postcode}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="postcode" styleClass="slds-input"
+                                                value="{!doctorWrapper.postcode}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-6"></div>
+                    <div class="slds-col slds-size_2-of-6">
+                        <div class="slds-form-element">
+                            <apex:outputLabel styleClass="slds-form-element__label"
+                                              value="{! $Label.CountryLabel}"/>
+                            <div class="slds-form-element__control">
+                                <apex:inputText id="country" styleClass="slds-input"
+                                                value="{!doctorWrapper.doctorCountry}"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <footer class="slds-modal__footer">
+                <div style="display: flex; justify-content: right; gap: 5px ">
+                <div id="createButton" style="display: none" >
+                <apex:commandButton styleClass="slds-button slds-button_brand" onClick="showOptions('modal')"
+                                    value="{!$Label.Create}" reRender="result,ispagemsg"
+                                    action="{!createDoctor}" status="status"/>
+                </div>
+                    <div id="editModalButton" style="display: none">
+                    <apex:commandButton styleClass="slds-button slds-button_brand" onClick="showOptions('modal')"
+                                    value="{!$Label.Edit}" reRender="result,ispagemsg"
+                                    action="{!editDoctor}" status="status"/>
+                    </div>
+                <div >
+                <apex:commandButton onClick="showOptions('modal')" reRender="none"
+                                    styleClass="slds-button slds-button_neutral" value="{!$Label.Cancel}"
+                />
+                </div>
+                </div>
+            </footer>
+
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</apex:form>
+</apex:page>

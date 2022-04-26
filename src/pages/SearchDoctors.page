@@ -1,0 +1,195 @@
+<apex:page id="SearchDoctors" controller="SearchDoctorsController" tabStyle="Doctors_Manager__tab"
+           lightningStylesheets="true">
+
+    <style type="text/css">
+        #searchSectionButtons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #foundMechanicsTable {
+             margin-left: 250px;
+        }
+
+        #infoNoResult{
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        #navigationSectionButtons{
+            display: flex;
+            justify-content: flex-start;
+            gap: 10px;
+            position: absolute;
+            align-items: center;
+        }
+
+    </style>
+    <apex:slds />
+    <div class="slds-scope">
+        <apex:actionStatus id="status">
+            <apex:facet name="start">
+                <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.2; z-index: 1000; background-color: black;">
+                    &nbsp;
+                </div>
+                <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; display: flex; justify-content: center; align-items: center">
+                    <img style="width: 80px; height: 80px;" src="{!URLFOR($Resource.LoaderIcon)}"/>
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:sectionHeader title="{!$Label.SearchPage}" subtitle="{!$Label.Doctors}"/>
+
+        <apex:form >
+            <apex:pageBlock id="searchBlock">
+                <apex:pageMessages id="ispagemsg"/>
+                <apex:pageBlockSection columns="2">
+                    <apex:inputField styleClass="slds-input" id="FirstName" value="{!searchDoctor.First_name__c}"
+                                     style="width: 200px"/>
+                    <apex:inputText styleClass="slds-input" id="Email" value="{!searchDoctor.Email__c}"
+                                    style="width: 200px"/>
+                    <apex:inputField styleClass="slds-input" id="LastName" value="{!searchDoctor.Name}"
+                                     style="width: 200px"/>
+                    <apex:inputField styleClass="slds-input" id="Country" value="{!searchDoctor.Country__c}"
+                                     style="width: 200px"/>
+                </apex:pageBlockSection>
+                <div id="searchSectionButtons">
+                    <apex:commandButton styleClass="slds-button slds-button_outline-brand" value="{!$Label.Search}"
+                                        action="{!searchDoctorsAction}"
+                                        rerender="result,searchBlock"
+                                        status="status"/>
+                    <apex:commandButton styleClass="slds-button slds-button_outline-brand" value="{!$Label.Clear}"
+                                        action="{!clearSearchField}"
+                                        rerender="result,searchBlock"
+                                        status="status"/>
+                    <apex:commandButton id="newButton"  reRender="modal-content-id-1,firstName,lastName,
+                                                                        email,phone,city,street,postcode,country,ispagemsg"
+                                        action="{!showNewModal}" onComplete="showModal('modal')" status="status"
+                                        styleClass="slds-button slds-button_outline-brand" value="{!$Label.New}"  />
+                </div>
+            </apex:pageBlock>
+             <apex:pageBlock id="result" title="{!$Label.Found} {!totalRecords}" mode="maindetail">
+
+
+                <apex:pageBlockTable id="tableResult" value="{!doctorsList}" var="doctor"
+                                     styleClass="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped">
+
+                    <apex:column headerValue="Actions">
+
+
+                        <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                            <apex:commandLink onClick="showOptions('{!doctor.SoapExternalId}')"
+                                              styleClass="slds-button slds-button_icon slds-button_icon-border-filled"
+                                              reRender="none" value="▼" >
+                                <apex:param name="SoapExternalId" value="{!doctor.SoapExternalId}"
+                                            assignTo="{!doctorByExternalId}"/>
+                            </apex:commandLink>
+                            <div id="{!doctor.SoapExternalId}" style="display: none" class="slds-dropdown slds-dropdown_left">
+                                <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+                                    <li class="slds-dropdown__item" role="presentation">
+
+
+                                        <apex:commandLink id="editButton" reRender="modal-content-id-1,firstName,lastName,
+                                                                        email,phone,city,street,postcode,country"
+                                                          action="{!showEditModal}" onComplete="showEditModal('modal')"
+                                                          styleClass="slds-truncate" value="{!$Label.Edit}" status="status">
+                                            <apex:param name="SoapExternalId" value="{!doctor.SoapExternalId}"
+                                                        assignTo="{!doctorByExternalId}"/>
+                                            </apex:commandLink>
+                                    </li>
+                                    <li class="slds-has-divider_top-space" role="separator"></li>
+
+                                    <li class="slds-dropdown__item" role="presentation">
+                                        <apex:commandLink onClick="showModalDelete('deleteModal','{!doctor.firstName}','{!doctor.lastName}')" reRender="none"
+                                                          styleClass="slds-truncate" value="{!$Label.Delete}" status="status">
+                                            <apex:param name="SoapExternalId" value="{!doctor.SoapExternalId}"
+                                                        assignTo="{!doctorByExternalId}"/>
+                                        </apex:commandLink>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </apex:column>
+                    <apex:column value="{!doctor.firstName}" headerValue="{!$Label.FirstName}"/>
+                    <apex:column value="{!doctor.lastName}" headerValue="{!$Label.LastName}"/>
+                    <apex:column value="{!doctor.email}" headerValue="{!$Label.Email}"/>
+                    <apex:column value="{!doctor.city}" headerValue="{!$Label.City}"/>
+                    <apex:column value="{!doctor.doctorCountry}" headerValue="{!$Label.countryLabel}"/>
+
+                </apex:pageBlockTable>
+                <div id="infoNoResult">
+                    <apex:outputText styleClass="slds-text-heading_medium" rendered="{!(doctorsList.size == 0)}"
+                                     value="{!$Label.noRecord}"/>
+                </div>
+                <div id="navigationSectionButtons">
+                    <apex:selectList styleClass="slds-select" value="{!pageSize}" size="1" multiSelect="false">
+                        <apex:selectOptions value="{!pageSizeItems}"/>
+                        <apex:actionSupport event="onchange" action="{!reloadPageSize}"
+                                            rerender="result"/>
+                    </apex:selectList>
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.First}"
+                                        action="{!firstPage}" disabled="{!prev}"
+                                        rerender="result" status="status"/>
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.Prev}"
+                                        action="{!previous}" disabled="{!prev}"
+                                        rerender="result" status="status"/>
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.Next}"
+                                        action="{!next}" disabled="{!nxt}" rerender="result" status="status"/>
+                    <apex:commandButton styleClass="slds-button slds-button_neutral" value="{!$Label.Last}"
+                                        action="{!lastPage}" disabled="{!nxt}"
+                                        rerender="result" status="status"/>
+                    <apex:outputText value="{!$Label.pageNumber}{!OffsetSize}/{!PageNumber}"/>
+                </div>
+                <div style="padding: 5px">
+                </div>
+            </apex:pageBlock>
+
+        </apex:form>
+
+        <div id="deleteModal" style="display: none">
+            <apex:outputPanel >
+                <apex:include pageName="DeleteDoctorModal"/>
+            </apex:outputPanel>
+        </div>
+
+        <div id="modal" style="display: none">
+            <apex:outputPanel id="panel" >
+                <apex:include pageName="NewUpdateModal"/>
+            </apex:outputPanel>
+        </div>
+
+        <script>
+    function showOptions(id){
+        document.getElementById(id).style.display = document.getElementById(id).style.display == 'block'
+        ? 'none'
+        : 'block' ;
+    }
+
+    function showModalDelete(id,firstName,lastName){
+        document.getElementById("modal-heading-01").innerHTML = 'Please confirm you want to delete '+ firstName +' '+ lastName
+        document.getElementById(id).style.display = 'block';
+    }
+
+    function showModal(id){
+            document.getElementById("modalHeader").innerHTML='New Doctor';
+            document.getElementById(id).style.display = 'block';
+            document.getElementById("editModalButton").style.display = 'none';
+            document.getElementById("createButton").style.display = 'block';
+    }
+
+    function showEditModal(id){
+             document.getElementById("modalHeader").innerHTML='Edit Doctor';
+             document.getElementById(id).style.display = 'block';
+             document.getElementById("createButton").style.display = 'none';
+             document.getElementById("editModalButton").style.display = 'block';
+    }
+
+        </script>
+    </div>
+</apex:page>

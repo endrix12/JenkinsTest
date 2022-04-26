@@ -1,0 +1,41 @@
+<apex:page standardController="Mechanic__c" tabStyle="Mechanic__c">
+    <apex:sectionHeader title="{!$Label.MechanicView}" subtitle="{!Mechanic__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.MechanicDetailView}" mode="maindetail">
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:pageBlockSection title="{!$Label.MechanicInformation}" columns="2">
+                <apex:outputField id="FirstName" value="{!Mechanic__c.First_name__c}"/>
+                <apex:outputField id="Level" value="{!Mechanic__c.Range__c}"/>
+                <apex:outputField id="LastName" value="{!Mechanic__c.Name}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicContactInformation}">
+                <apex:outputField id="Phone" value="{!Mechanic__c.Phone__c}"/>
+                <apex:outputField id="Email" value="{!Mechanic__c.Email__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicAdressInformation}">
+                <apex:outputField id="City" value="{!Mechanic__c.City__c}"/>
+                <apex:outputField id="Province" value="{!Mechanic__c.Province__c}"/>
+                <apex:outputField id="Street" value="{!Mechanic__c.Street__c}"/>
+                <apex:outputField id="Country" value="{!Mechanic__c.Country__c}"/>
+                <apex:outputField id="ZipPostalCode" value="{!Mechanic__c.Zip_Postal_Code__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicAdditionalInformation}">
+                <apex:outputField id="DateOfBirth" value="{!Mechanic__c.Date_of_birth__c}"/>
+                <apex:outputField id="ReceiveBirthdayEmails" value="{!Mechanic__c.Receive_Birthday_Emails__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicSystemInformation}">
+                <apex:outputField id="CreatedBy" value="{!Mechanic__c.CreatedById}"/>
+                <apex:outputField id="Owner" value="{!Mechanic__c.OwnerID}"/>
+                <apex:outputField id="LastModifiedBy" value="{!Mechanic__c.LastModifiedById}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!Edit}" value="{!$Label.Edit}"/>
+                <apex:commandButton action="{!Delete}" value="{!$Label.Delete}"/>
+                <apex:commandButton value="{!$Label.Clone}"
+                                    action="{!URLFOR($Action.Mechanic__c.Clone,Mechanic__c.id)}"/>
+                <apex:commandButton value="{!$Label.Sharing}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="Contracts__r"/>
+</apex:page>

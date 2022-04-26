@@ -1,0 +1,6 @@
+<apex:page id="MechanicsCSV" controller="SearchController" contentType="application/vnd.ms-excel#Mechanics_CSV.csv"
+                       readOnly="true">{!headersCSV}
+    <apex:repeat value="{!mechanicsListToFile}" var="mechanic">
+{!mechanic.First_name__c};{!mechanic.Name};{!mechanic.Email__c};{!mechanic.City__c};{!mechanic.Country__c}
+    </apex:repeat>
+</apex:page>

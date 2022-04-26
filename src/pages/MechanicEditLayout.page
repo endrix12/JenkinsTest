@@ -1,0 +1,36 @@
+<apex:page standardController="Mechanic__c" tabStyle="Mechanic__c">
+    <apex:sectionHeader title="{!$Label.MechanicEdit}" subtitle="{!$Label.MechanicSubtitleHeaderSection}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.MechanicEdit}" mode="edit">
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:pageBlockSection title="{!$Label.MechanicInformation}" columns="2">
+                <apex:inputField id="FirstName" value="{!Mechanic__c.First_name__c}"/>
+                <apex:inputField id="Level" value="{!Mechanic__c.Range__c}"/>
+                <apex:inputField required="true" id="LastName" value="{!Mechanic__c.Name}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicContactInformation}">
+                <apex:inputField id="Phone" value="{!Mechanic__c.Phone__c}"/>
+                <apex:inputField id="Email" value="{!Mechanic__c.Email__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicAdressInformation}">
+                <apex:inputField id="City" value="{!Mechanic__c.City__c}"/>
+                <apex:inputField id="Province" value="{!Mechanic__c.Province__c}"/>
+                <apex:inputField id="Street" value="{!Mechanic__c.Street__c}"/>
+                <apex:inputField id="Country" value="{!Mechanic__c.Country__c}"/>
+                <apex:inputField id="ZipPostalCode" value="{!Mechanic__c.Zip_Postal_Code__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicAdditionalInformation}">
+                <apex:inputField id="DateOfBirth" value="{!Mechanic__c.Date_of_birth__c}"/>
+                <apex:inputField id="ReceiveBirthdayEmails" value="{!Mechanic__c.Receive_Birthday_Emails__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.MechanicSystemInformation}">
+                <apex:outputField id="Owner" value="{!Mechanic__c.OwnerId}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="{!$Label.Save}" action="{!save}"/>
+                <apex:commandButton value="{!$Label.SaveAndNew}" action="{!save}"/>
+                <apex:commandButton value="{!$Label.Cancel}" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

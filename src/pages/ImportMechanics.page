@@ -1,0 +1,100 @@
+<apex:page id="ImportMechanics" controller="ImportMechanicsController" tabStyle="Import_Mechanics__tab">
+    <apex:actionStatus id="status">
+        <apex:facet name="start">
+            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.2; z-index: 1000; background-color: black;">
+                &nbsp;
+            </div>
+            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; display: flex; justify-content: center; align-items: center">
+                <img style="width: 80px; height: 80px;" src="{!URLFOR($Resource.LoaderIcon)}"/>
+            </div>
+        </apex:facet>
+    </apex:actionStatus>
+    <apex:sectionHeader title="{!$Label.csv}" subtitle="{!$Label.ImportMechanics}"/>
+    <apex:includeScript value="{!$Resource.jQuery }"/>
+    <apex:form id="form">
+        <apex:pagemessages />
+        <apex:pageBlock mode="maindetail">
+            <apex:pageBlock rendered="{!mechanics.size == 0}" id="importPanel"
+                            mode="maindetail">
+                <apex:inputFile style="margin-left: 10px;" id="inputFile" accept=".csv" value="{!csvFileBody}"
+                                filename="{!csvAsString}"
+                                onChange="checkFileFormat(event,id)"/>
+                <br/><br/>
+                <apex:commandButton style="margin-left: 10px;" value="{!$Label.ReadFile}" action="{!importCSVFile}"/>
+            </apex:pageBlock>
+            <apex:pageBlock id="result" rendered="{!mechanics.size != 0 && mechanics.size != null}"
+                            title="{!$Label.RecordsToImport}: {!mechanics.size}">
+                <apex:pageblocktable value="{!mechanics}" var="mechanicWrapper">
+                    <apex:column headerValue="{!$Label.Select}">
+                        <apex:inputCheckbox value="{!mechanicWrapper.isChecked}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.FirstName}">
+                        <apex:outputText value="{!mechanicWrapper.firstName}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.LastName}">
+                        <apex:outputText value="{!mechanicWrapper.lastName}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.Email}">
+                        <apex:outputText value="{!mechanicWrapper.email}"/>
+                    </apex:column>
+                    <apex:column headerValue="{! $Label.City}">
+                        <apex:outputText value="{!mechanicWrapper.city}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.countryLabel}">
+                        <apex:outputText value="{!mechanicWrapper.country}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.Status}">
+                        <apex:outputText value="{!mechanicWrapper.backMessage}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$Label.Links}">
+                        <apex:outputLink value="{! URLFOR($Action.Mechanic__c.View, mechanicWrapper.id) }"
+                                         target="_blank"
+                                         rendered="{!IF(mechanicWrapper.id !=null, true, false)}">
+                                {!$Label.View}
+                        </apex:outputLink>
+                    </apex:column>
+                </apex:pageblocktable>
+                <table style="width: 100%;">
+                    <tr>
+                        <td style="width: 50%">
+
+                            <apex:commandButton style="margin: 5px" value="{!$Label.SelectAll}"
+                                                action="{!selectAll}" reRender="result" status="status"/>
+                            <apex:commandButton style="margin: 5px" value="{!$Label.UnselectAll}"
+                                                action="{!deSelectAll}" reRender="result" status="status"/>
+                            <apex:commandButton style="margin: 5px" value="{!$Label.InvertAll}"
+                                                action="{!invertAll}" reRender="result" status="status"/>
+
+                        </td>
+                        <td style="width: 40%">
+                            <apex:commandButton style="margin: 5px" value="{!$Label.Import}"
+                                                action="{!insertAll}" reRender="form" status="status"/>
+                            <apex:commandButton style="margin: 5px" value="{!$Label.Clear}"
+                                                action="{!clearAll}" reRender="form" status="status"/>
+                        </td>
+                        <td style="width: 10%">
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageBlock>
+        </apex:pageBlock>
+    </apex:form>
+
+    <script>
+    var hash = {
+      '.csv'  : 1,
+      '.CSV'  : 1
+    };
+    j$ = jQuery.noConflict();
+    function checkFileFormat(event, id) {
+        var re = /\..+$/;
+        var extension = event.target.files[0].name.match(re);
+        if(hash[extension]) {
+ 
+        } else {
+            alert('Uploaded file should be csv');
+            document.getElementById(id).value ='';
+        }
+    }
+    </script>
+</apex:page>

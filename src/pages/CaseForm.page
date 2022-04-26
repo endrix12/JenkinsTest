@@ -1,0 +1,222 @@
+<apex:page id="CaseForm" lightningStylesheets="true" showHeader="false">
+
+
+    <script type='text/javascript' src='https://c.la2-c1-fra.salesforceliveagent.com/content/g/js/54.0/deployment.js'></script>
+    <script type='text/javascript'>
+        liveagent.init('https://d.la2-c1-fra.salesforceliveagent.com/chat', '5727Q000000PT6m', '00D7Q000002Ab6I');
+    </script>
+    <style>
+/* Style inputs with type="text", select elements and textareas */
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+   background-image: url("{!$Resource.CaseBg}");
+   background-size: 100%;
+
+}
+h1 {
+    font-size: 22px;
+
+}
+
+input[type=text], select, textarea, input[type=email] {
+  width: 100%; /* Full width */
+  padding: 12px; /* Some padding */
+  border: 1px solid #ccc; /* Gray border */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Make sure that padding and width stays in place */
+  margin-top: 6px; /* Add a top margin */
+  margin-bottom: 16px; /* Bottom margin */
+  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
+
+
+}
+
+/* Style the submit button with a specific background color etc */
+input[type=submit] {
+  background-color: #2596be;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* When moving the mouse over the submit button, add a darker green color */
+input[type=submit]:hover {
+  background-color: #116ba0;
+}
+
+/* Add a background color and some padding around the form */
+.form {
+    padding:10px;
+
+}
+
+.logo {
+
+}
+
+.container{
+       width:50%;
+  box-shadow: 20px 20px 0 rgba(0, 0, 0, 0.3);
+margin-top: 100px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+
+}
+
+    </style>
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <META> element to your page <HEAD>.      -->
+    <!--  If necessary, please modify the charset parameter to specify the        -->
+    <!--  character set of your HTML page.                                        -->
+    <!--  ----------------------------------------------------------------------  -->
+
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
+
+    <!--  ----------------------------------------------------------------------  -->
+    <!--  NOTE: Please add the following <FORM> element to your page.             -->
+    <!--  ----------------------------------------------------------------------  -->
+
+    <div class="container">
+        <div class="logo">
+            <img src="{!$Resource.worker1}" style="width: 300px; border-radius: 30px" />
+        </div>
+        <div class="form">
+            <div style="margin-bottom:10px">
+            <h1>How Can I Help You?</h1>
+            </div>
+
+            <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
+
+                <input type="hidden" name="orgid" value="00D7Q000002Ab6I"/>
+                <input type="hidden" name="retURL" value="https://bestcarservice-developer-edition.eu44.force.com/CaseConfirm"/>
+
+                <!--  ----------------------------------------------------------------------  -->
+                <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+                <!--  these lines if you wish to test in debug mode.                          -->
+                <!--  <input type="hidden" name="debug" value=1>                              -->
+                <!--  <input type="hidden" name="debugEmail"                                  -->
+                <!--  value="andrzejbusko610@gmail.com">                                      -->
+                <!--  ----------------------------------------------------------------------  -->
+
+                <label for="name">Contact Name</label><input id="name" maxlength="80" name="name" size="20"
+                                                             type="text" autocomplete="true"/><br/>
+
+                <label for="email">Email</label><input id="email" maxlength="80" name="email" size="20"
+                                                       type="email" required="true" /><br/>
+
+                <label for="phone">Phone</label><input id="phone" maxlength="40" name="phone" size="20"
+                                                        type="text" autocomplete="true" /><br/>
+
+                <label for="subject">Subject</label><input id="subject" maxlength="80" name="subject" size="20"
+                                                           type="text"/><br/>
+                <label for="reason">Case Reason</label><select id="reason" name="reason">
+                <option value="">--None--</option>
+                <option value="Installation">Installation</option>
+                <option value="Equipment Complexity">Equipment Complexity</option>
+                <option value="Performance">Performance</option>
+                <option value="Breakdown">Breakdown</option>
+                <option value="Equipment Design">Equipment Design</option>
+                <option value="Feedback">Feedback</option>
+                <option value="Other">Other</option>
+            </select><br/>
+
+                <label for="description">Description</label><textarea name="description"></textarea><br/>
+
+
+
+                <input type="hidden" id="external" name="external" value="1"/><br/>
+
+                <input type="submit" name="Send" value="Send" />
+
+            </form>
+
+        </div>
+    </div>
+<!--    <img id="liveagent_button_online_5737Q000000PTjJ" style="display: none; border: 0px none; cursor: pointer" onclick="liveagent.startChat('5737Q000000PTjJ')" src="https://bestcarservice-developer-edition.eu44.force.com/resource/1646742332000/onlineIcon" />-->
+<!--    <div id="liveagent_button_offline_5737Q000000PTjJ" style="display: none;">-->
+<!--        CHAT OFFLINE-->
+<!--    </div>-->
+<!--    <script type="text/javascript">-->
+<!--        if (!window._laq) {-->
+<!--            window._laq = [];-->
+<!--        }-->
+<!--        window._laq.push(function(){-->
+<!--            liveagent.showWhenOnline('5737Q000000PTjJ', document.getElementById('liveagent_button_online_5737Q000000PTjJ'));-->
+<!--            liveagent.showWhenOffline('5737Q000000PTjJ', document.getElementById('liveagent_button_offline_5737Q000000PTjJ'));-->
+<!--        });-->
+<!--    </script>-->
+
+    <style type='text/css'>
+	.embeddedServiceHelpButton .helpButton .uiButton {
+		background-color: #005290;
+		font-family: "Arial", sans-serif;
+	}
+	.embeddedServiceHelpButton .helpButton .uiButton:focus {
+		outline: 1px solid #005290;
+	}
+</style>
+
+    <script type='text/javascript' src='https://service.force.com/embeddedservice/5.0/esw.min.js'></script>
+    <script type='text/javascript'>
+	var initESW = function(gslbBaseURL) {
+		embedded_svc.settings.displayHelpButton = true; //Or false
+		embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
+
+		//embedded_svc.settings.defaultMinimizedText = '...'; //(Defaults to Chat with an Expert)
+		//embedded_svc.settings.disabledMinimizedText = '...'; //(Defaults to Agent Offline)
+
+		//embedded_svc.settings.loadingText = ''; //(Defaults to Loading)
+		//embedded_svc.settings.storageDomain = 'yourdomain.com'; //(Sets the domain for your deployment so that visitors can navigate subdomains during a chat session)
+
+		// Settings for Chat
+		//embedded_svc.settings.directToButtonRouting = function(prechatFormData) {
+			// Dynamically changes the button ID based on what the visitor enters in the pre-chat form.
+			// Returns a valid button ID.
+		//};
+		//embedded_svc.settings.prepopulatedPrechatFields = {}; //Sets the auto-population of pre-chat form fields
+		//embedded_svc.settings.fallbackRouting = []; //An array of button IDs, user IDs, or userId_buttonId
+		//embedded_svc.settings.offlineSupportMinimizedText = '...'; //(Defaults to Contact Us)
+
+		embedded_svc.settings.enabledFeatures = ['LiveAgent'];
+		embedded_svc.settings.entryFeature = 'LiveAgent';
+
+		embedded_svc.init(
+			'https://britenet-ba-dev-ed.my.salesforce.com',
+			'https://bestcarservice-developer-edition.eu44.force.com',
+			gslbBaseURL,
+			'00D7Q000002Ab6I',
+			'Support_Agents',
+			{
+				baseLiveAgentContentURL: 'https://c.la2-c1-fra.salesforceliveagent.com/content',
+				deploymentId: '5727Q000000PSuJ',
+				buttonId: '5737Q000000PTjT',
+				baseLiveAgentURL: 'https://d.la2-c1-fra.salesforceliveagent.com/chat',
+				eswLiveAgentDevName: 'Support_Agents',
+				isOfflineSupportEnabled: true
+			}
+		);
+	};
+
+	if (!window.embedded_svc) {
+		var s = document.createElement('script');
+		s.setAttribute('src', 'https://britenet-ba-dev-ed.my.salesforce.com/embeddedservice/5.0/esw.min.js');
+		s.onload = function() {
+			initESW(null);
+		};
+		document.body.appendChild(s);
+	} else {
+		initESW('https://service.force.com');
+	}
+</script>
+</apex:page>

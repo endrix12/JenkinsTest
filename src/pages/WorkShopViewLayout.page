@@ -1,0 +1,34 @@
+<apex:page standardController="Workshop__c" tabStyle="Workshop__c">
+    <apex:sectionHeader title="{!$Label.WorkshopViewHeader}" subtitle="{!Workshop__c.Name}"/>
+    <apex:form >
+        <apex:pageBlock title="{!$Label.WorkshopViewPageHeader}" mode="maindetail">
+            <apex:pageMessages ></apex:pageMessages>
+            <apex:pageBlockSection title="{!$Label.WorkshopViewPageSectionInformation}" columns="2">
+                <apex:outputField id="WorkshopName" value="{!Workshop__c.Name}"/>
+                <apex:outputField id="Website" value="{!Workshop__c.Website__c}"/>
+                <apex:outputField id="Specialization" value="{!Workshop__c.Specialization__c}"/>
+                <apex:outputField id="Openhour" value="{!Workshop__c.OpenHour__c}"/>
+                <apex:outputField id="Phone" value="{!Workshop__c.Phone__c}"/>
+                <apex:outputField id="Closedhour" value="{!Workshop__c.ClosedHour__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.WorkshopViewPageSectionAdressInformation}">
+                <apex:outputField id="City" value="{!Workshop__c.City__c}"/>
+                <apex:outputField id="Province" value="{!Workshop__c.Province__c}"/>
+                <apex:outputField id="ZipPostalCode" value="{!Workshop__c.Zip_Postal_Code__c}"/>
+                <apex:outputField id="Street" value="{!Workshop__c.Street__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="{!$Label.WorkshopViewPageSectionSystemInformation}">
+                <apex:outputField id="CreatedBy" value="{!Workshop__c.CreatedById}"/>
+                <apex:outputField id="LastModifiedBy" value="{!Workshop__c.LastModifiedById}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!Edit}" value="{!$Label.Edit}"/>
+                <apex:commandButton action="{!Delete}" value="{!$Label.Delete}"/>
+                <apex:commandButton value="{!$Label.Clone}"
+                                    action="{!URLFOR($Action.WorkShop__c.Clone,WorkShop__c.id)}"/>
+                <apex:commandButton value="{!$Label.Sharing}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:relatedList list="Contracts_workshop__r"/>
+</apex:page>

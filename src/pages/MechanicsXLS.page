@@ -1,0 +1,5 @@
+<apex:page id="MechanicsXML" controller="SearchController" contentType="application/vnd.ms-excel#Mechanics_XLS.xls">{!headersXLS}
+    <apex:repeat value="{!mechanicsListToFile}"
+                 var="mechanic">
+{!mechanic.First_name__c}{!TabChar}{!mechanic.Name}{!TabChar}{!mechanic.Email__c}{!TabChar}{!mechanic.City__c}{!TabChar}{!mechanic.Country__c}</apex:repeat>
+</apex:page>
