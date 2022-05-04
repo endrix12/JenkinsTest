@@ -4,8 +4,7 @@ public with sharing class ProductController {
     }
 
     @AuraEnabled
-    public static Product2 upsertProduct(Product2 product){
-        system.debug(product);
+    public static Product2 upsertProduct(Product2 product){       
         try {
             Database.UpsertResult result = Database.upsert(product, false);
             List<Pricebook2> allPricebooks = PricebookController.getPricebooks();
@@ -33,7 +32,10 @@ public with sharing class ProductController {
 
          for (ContentDocumentLink cdl : contentDocumentLinks) {
             idsList.add('/sfc/servlet.shepherd/document/download/'+cdl.ContentDocumentId);
+            cdl.shareType = 'I';
+            cdl.Visibility='AllUsers';
          }
+         update contentDocumentLinks;
     return idsList;
     }   
 

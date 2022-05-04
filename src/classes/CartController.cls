@@ -5,6 +5,7 @@ public with sharing class CartController {
     
     @AuraEnabled
     public static boolean addProductToCart(String id){
+        System.debug('aaaa '+ id);
         Map<String,CartItem> cartItems = new Map<String,CartItem>();
         Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.myCache');
         if((Map<String,CartItem>)sessionPart.get('cart')!=null)

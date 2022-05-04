@@ -122,8 +122,25 @@ public with sharing class SpotifyController {
     }
 
     @AuraEnabled
+    public static List<Comment__c> addComment(String trackId, String content) {
+        return TracksService.addCommentToProduct(trackId, content);
+    }
+    @AuraEnabled
+    public static Comment__c getComment(String trackId) {
+        return TracksService.getUserComment(trackId);
+    }
+      
+
+    @AuraEnabled
     public static List<Comment__c> getCommentsById(String trackId) {
         return TracksService.getComments(trackId);
+    }
+
+
+
+    @AuraEnabled
+    public static List<Rate__c> getRatesById(String trackId) {
+        return TracksService.getRates(trackId);
     }
 
     @AuraEnabled
@@ -144,5 +161,10 @@ public with sharing class SpotifyController {
     @AuraEnabled
     public static Rate__c getThisUserRate(String trackId) {
         return TracksService.getUserRate(trackId);
+    }
+
+    @AuraEnabled
+    public static Rate__c getUserRateToProduct(String trackId, String userId) {
+        return [SELECT Id,SpotifyId__c,RateValue__c,CreatedBy.Id FROM Rate__c WHERE SpotifyId__c = :trackId AND CreatedBy.Id = :userId];
     }
 }

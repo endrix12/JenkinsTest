@@ -66,9 +66,25 @@ public with sharing class TracksService {
     }
 
     public static List<Comment__c> addComment(String trackId, String content) {
+       
         Comment__c newComment = new Comment__c(SpotifyId__c = trackId, Content__c = content, CreatedDate__c = Date.today(),Created_Date_Time__c = Datetime.now());
         insert newComment;
         List<Comment__c> comments = [SELECT Id,SpotifyId__c,Content__c,CreatedBy.Name,CreatedDate__c FROM Comment__c WHERE SpotifyId__c = :trackId ORDER BY Created_Date_Time__c DESC ];
+        return comments;
+    }
+
+    public static List<Comment__c> addCommentToProduct(String trackId, String content) {
+        Comment__c newComment = new Comment__c(SpotifyId__c = trackId, Content__c = content, CreatedDate__c = Date.today(),Created_Date_Time__c = Datetime.now());
+        List<Comment__c> comments = [SELECT Id,SpotifyId__c,Content__c,CreatedBy.Name,CreatedDate__c FROM Comment__c WHERE SpotifyId__c = :trackId AND CreatedBy.Id = :UserInfo.getUserId() ORDER BY Created_Date_Time__c DESC ];
+        if(comments.isEmpty()){     
+        insert newComment;
+        }else{
+            comments[0].Content__c = content;
+            comments[0].Created_Date_Time__c = Datetime.now();
+            comments[0].CreatedDate__c = Date.today();
+            update comments;
+        }
+        comments = [SELECT Id,SpotifyId__c,Content__c,CreatedBy.Name,CreatedDate__c FROM Comment__c WHERE SpotifyId__c = :trackId ORDER BY Created_Date_Time__c DESC ];
         return comments;
     }
 
@@ -77,8 +93,18 @@ public with sharing class TracksService {
         return comments;
     }
 
+    public static List<Rate__c> getRates(String trackId) {
+        List<Rate__c> rates = [SELECT ID,RateValue__c,SpotifyId__c, CreatedBy.Id FROM Rate__c WHERE SpotifyId__c = :trackId ];
+        return rates;
+    }
+
+    public static Comment__c getUserComment(String trackId) {
+        return [SELECT Id,SpotifyId__c,Content__c,CreatedBy.Name,CreatedBy.ID,CreatedDate__c FROM Comment__c WHERE SpotifyId__c = :trackId AND CreatedBy.Id = :UserInfo.getUserId() LIMIT 1] ;
+        
+    }
+
     public static Decimal addNewRate(String trackId, Integer rate) {
-        List<Rate__c> rates = [SELECT Id,SpotifyId__c,CreatedBy.Id FROM Rate__c WHERE SpotifyId__c = :trackId AND CreatedBy.Id = :UserInfo.getUserId()];
+        List<Rate__c> rates = [SELECT Id,SpotifyId__c,RateValue__c,CreatedBy.Id FROM Rate__c WHERE SpotifyId__c = :trackId AND CreatedBy.Id = :UserInfo.getUserId()];
         if(rates.isEmpty()){
             Rate__c newRate = new Rate__c(SpotifyId__c=trackId, RateValue__c=rate);
             insert newRate;
